@@ -1,68 +1,49 @@
 "use client";
 
-import {
-  Minimize2,
-  RefreshCcw,
-  LayoutGrid,
-  Type,
-  PenLine,
-  Sparkles,
-  MoreHorizontal,
-  FolderClosed,
-  CircleUserRound,
-} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import { NAV, SITE_NAME } from "@/lib/site";
 
-const tools = [
-  { icon: Minimize2, label: "Compress" },
-  { icon: RefreshCcw, label: "Convert" },
-  { icon: LayoutGrid, label: "Organize" },
-  { icon: Type, label: "Edit" },
-  { icon: PenLine, label: "Sign" },
-  { icon: Sparkles, label: "AI PDF", active: true },
-  { icon: MoreHorizontal, label: "More" },
-];
+export default function Sidebar({ onNavigate }) {
+  const pathname = usePathname();
 
-export default function Sidebar() {
   return (
-    <aside className="hidden md:flex w-24 shrink-0 flex-col items-center border-r border-gray-100 bg-white py-5">
-      <div className="mb-6">
-        <Logo size={34} />
-      </div>
+    <nav className="flex h-full flex-col overflow-y-auto px-3 py-4" aria-label="Tools">
+      <Link href="/" onClick={onNavigate} className="mb-6 flex items-center gap-2.5 px-2">
+        <Logo size={30} />
+        <span className="text-lg font-bold text-gray-900">{SITE_NAME}</span>
+      </Link>
 
-      <nav className="flex flex-1 flex-col items-center gap-1">
-        {tools.map(({ icon: Icon, label, active }) => (
-          <button
-            key={label}
-            type="button"
-            className={`flex w-20 flex-col items-center gap-1 rounded-xl py-3 text-[11px] font-medium transition-colors ${
-              active
-                ? "bg-indigo-600 text-white shadow-sm shadow-indigo-200"
-                : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-            }`}
-          >
-            <Icon size={20} strokeWidth={1.75} />
-            {label}
-          </button>
-        ))}
-      </nav>
-
-      <div className="flex flex-col items-center gap-1 pt-1">
-        <button
-          type="button"
-          className="flex w-20 flex-col items-center gap-1 rounded-xl py-3 text-[11px] font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        >
-          <FolderClosed size={20} strokeWidth={1.75} />
-          Documents
-        </button>
-        <button
-          type="button"
-          className="flex w-20 flex-col items-center gap-1 rounded-xl py-3 text-[11px] font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        >
-          <CircleUserRound size={20} strokeWidth={1.75} />
-          Account
-        </button>
-      </div>
-    </aside>
+      {NAV.map((group) => (
+        <div key={group.heading} className="mb-5">
+          <p className="mb-1 px-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+            {group.heading}
+          </p>
+          <ul className="space-y-0.5">
+            {group.items.map(({ href, label, icon: Icon }) => {
+              const active = pathname === href;
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    onClick={onNavigate}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                      active
+                        ? "bg-indigo-50 text-indigo-700"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
+                  >
+                    <Icon size={18} strokeWidth={1.75} className={active ? "text-indigo-600" : "text-gray-400"} />
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </nav>
   );
 }

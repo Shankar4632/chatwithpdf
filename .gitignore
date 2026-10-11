@@ -2,3 +2,6 @@ node_modules
 .next
 out
 .env*
+!.env.example
+# copied from pdfjs-dist by scripts/copy-pdfjs-assets.mjs
+public/pdfjs

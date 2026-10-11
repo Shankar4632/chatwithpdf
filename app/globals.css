@@ -15,3 +15,50 @@ body {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 9999px;
 }
+.thin-scrollbar::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+/* Markdown inside assistant replies */
+.chat-markdown > * + * {
+  margin-top: 0.6em;
+}
+.chat-markdown ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.chat-markdown ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.chat-markdown li + li {
+  margin-top: 0.25em;
+}
+.chat-markdown strong {
+  font-weight: 600;
+}
+.chat-markdown h1,
+.chat-markdown h2,
+.chat-markdown h3 {
+  font-weight: 600;
+}
+.chat-markdown a {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+.chat-markdown code {
+  border-radius: 0.25rem;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.1em 0.3em;
+  font-size: 0.9em;
+}
+.chat-markdown pre {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.75rem;
+}
+.chat-markdown pre code {
+  background: none;
+  padding: 0;
+}
